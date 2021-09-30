@@ -1,8 +1,14 @@
 package com.example.messengerapp
 
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.example.messengerapp.fragments.ChatFragment
 import com.example.messengerapp.fragments.MoreFragment
@@ -25,9 +31,18 @@ class MainActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.decorView.windowInsetsController?.setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }else{
+            window.statusBarColor = Color.GRAY
+
+        }
+
         bottomNavigationView_main.setOnItemSelectedListener(this)
         setFragment(mChatFragment)
-
 
     }
 

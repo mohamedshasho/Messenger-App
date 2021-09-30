@@ -7,6 +7,18 @@
     tools:context=".MainActivity">
 
 <!--frameLayout or CoordinatorLayout لكن كوردينيتور له ميزات اكثر في تعامل من فراغمينت-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple_700"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout_main_content"
         android:layout_width="0dp"
@@ -14,7 +26,9 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView_main"
@@ -22,6 +36,7 @@
         android:layout_height="wrap_content"
         android:background="?android:windowBackground"
         app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@drawable/background_icon_bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

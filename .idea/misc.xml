@@ -3,14 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/background_icon_bottom_nav.xml" value="0.2351851851851852" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/btn_background.xml" value="0.1648148148148148" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/btn_create_account_background.xml" value="0.10740740740740741" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/btn_create_acount_background.xml" value="0.1875" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.16574074074074074" />
-        <entry key="..\:/project kotlin/app/src/main/res/layout/activity_main.xml" value="0.11851851851851852" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/project kotlin/app/src/main/res/layout/activity_sign_in.xml" value="0.24666666666666667" />
         <entry key="..\:/project kotlin/app/src/main/res/layout/activity_sign_up.xml" value="0.24666666666666667" />
         <entry key="..\:/project kotlin/app/src/main/res/layout/fragment_chat.xml" value="0.17962962962962964" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/fragment_discover.xml" value="0.1" />
         <entry key="..\:/project kotlin/app/src/main/res/menu/bottom_navigation_items.xml" value="0.17962962962962964" />
       </map>
     </option>
