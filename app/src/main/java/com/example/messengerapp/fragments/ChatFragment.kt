@@ -1,55 +1,71 @@
 package com.example.messengerapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.*
+import com.example.messengerapp.ProfileActivity
 import com.example.messengerapp.R
+import com.example.messengerapp.model.ChatItem
+import com.example.messengerapp.model.User
+import com.example.messengerapp.recyclerview.RecyclerAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.android.synthetic.main.fragment_chat.*
+
 
 class ChatFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+     private  val firebaseFirestore : FirebaseFirestore by lazy {
+         FirebaseFirestore.getInstance()
+     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        val textview_title  =activity?.findViewById<TextView>(R.id.title_toolbar_textview)
+        textview_title?.text="Chats"
+        val circleImageViewProfile = activity?.findViewById(R.id.imageView_profile) as ImageView
+        circleImageViewProfile.setOnClickListener{
+            startActivity(Intent(activity, ProfileActivity::class.java))
+        }
+        addChatListener(::initRecyclerView)
+
         return inflater.inflate(R.layout.fragment_chat, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChatFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChatFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun addChatListener(onListen : (ArrayList<ChatItem>) ->Unit):ListenerRegistration {
+   return firebaseFirestore.collection("users").addSnapshotListener{snapshot,exeption->
+        if(exeption!=null){
+            //then found error
+            return@addSnapshotListener
+        }
+       val chatItems = ArrayList<ChatItem>()
+
+       snapshot!!.documents.forEach{document->
+           chatItems.add(ChatItem(document.id,document.toObject(User::class.java)!!))
+
+       }
+        onListen(chatItems)
     }
+    }
+
+    private fun  initRecyclerView(chatItems: ArrayList<ChatItem>){
+
+
+        val adapter = RecyclerAdapter(chatItems)
+        Log.i("usersss",adapter.itemCount.toString())
+        chat_recyclerview.layoutManager = LinearLayoutManager(activity,VERTICAL,false)
+        chat_recyclerview.adapter =adapter
+        }
+
 }

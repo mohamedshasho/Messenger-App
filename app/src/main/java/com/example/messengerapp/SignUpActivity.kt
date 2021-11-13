@@ -1,6 +1,8 @@
 package com.example.messengerapp
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +10,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.example.messengerapp.model.User
@@ -35,6 +38,17 @@ class SignUpActivity : AppCompatActivity(), TextWatcher {
         editText_name_signUp.addTextChangedListener(this)
         editText_email_signUp.addTextChangedListener(this)
         editText_password_signUp.addTextChangedListener(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }else{
+            window.statusBarColor = Color.GRAY
+        }
 
         btn_signUp.setOnClickListener {
             val name = editText_name_signUp.text.toString().trim()

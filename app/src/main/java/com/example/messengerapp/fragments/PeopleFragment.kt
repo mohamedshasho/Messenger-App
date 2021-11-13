@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.messengerapp.R
 
 
@@ -18,7 +19,8 @@ class PeopleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        val textview_title  =activity?.findViewById<TextView>(R.id.title_toolbar_textview)
+        textview_title?.text="People"
         return inflater.inflate(R.layout.fragment_people, container, false)
     }
 

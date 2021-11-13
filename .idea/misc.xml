@@ -4,15 +4,29 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/project kotlin/app/src/main/res/drawable/background_icon_bottom_nav.xml" value="0.2351851851851852" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/background_search_edit_text.xml" value="0.21851851851851853" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/background_text_message.xml" value="0.12129629629629629" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/btn_background.xml" value="0.1648148148148148" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/btn_create_account_background.xml" value="0.10740740740740741" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/btn_create_acount_background.xml" value="0.1875" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/edittext_message.xml" value="0.26256410256410256" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/ic_back.xml" value="0.225" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/ic_image.xml" value="0.26256410256410256" />
         <entry key="..\:/project kotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.16574074074074074" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/ic_send.xml" value="0.26256410256410256" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/rect_round_gray.xml" value="0.2037037037037037" />
+        <entry key="..\:/project kotlin/app/src/main/res/drawable/rect_round_pink.xml" value="0.12129629629629629" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/activity_chat.xml" value="0.25052083333333336" />
         <entry key="..\:/project kotlin/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/project kotlin/app/src/main/res/layout/activity_sign_in.xml" value="0.24666666666666667" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/activity_profile.xml" value="0.19166666666666668" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/activity_sign_in.xml" value="0.1" />
         <entry key="..\:/project kotlin/app/src/main/res/layout/activity_sign_up.xml" value="0.24666666666666667" />
-        <entry key="..\:/project kotlin/app/src/main/res/layout/fragment_chat.xml" value="0.17962962962962964" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/fragment_chat.xml" value="0.25" />
         <entry key="..\:/project kotlin/app/src/main/res/layout/fragment_discover.xml" value="0.1" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/item_text_message.xml" value="0.4" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/recipient_item_text_message.xml" value="0.4" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/recycler_view_item.xml" value="0.2064814814814815" />
+        <entry key="..\:/project kotlin/app/src/main/res/layout/sender_item_image_message.xml" value="0.46944444444444444" />
         <entry key="..\:/project kotlin/app/src/main/res/menu/bottom_navigation_items.xml" value="0.17962962962962964" />
       </map>
     </option>
