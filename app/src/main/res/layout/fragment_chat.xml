@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="@+id/editText" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chat_recyclerview"
+        android:id="@+id/chat_fragment_recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

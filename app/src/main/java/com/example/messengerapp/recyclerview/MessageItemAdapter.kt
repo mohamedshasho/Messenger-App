@@ -14,12 +14,9 @@ import com.example.messengerapp.glide.GlideApp
 import com.example.messengerapp.model.MessageDoc
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_profile.*
-import java.lang.Exception
 
-class TextMessageItemAdapter(private var messages: ArrayList<MessageDoc>, val context: Context) :
-    RecyclerView.Adapter<TextMessageItemAdapter.ViewHolderItem>() {
+class MessageItemAdapter(private var messages: ArrayList<MessageDoc>, val context: Context) :
+    RecyclerView.Adapter<MessageItemAdapter.ViewHolderItem>() {
 
     private val storageInstance: FirebaseStorage by lazy {
         FirebaseStorage.getInstance()
@@ -34,7 +31,8 @@ class TextMessageItemAdapter(private var messages: ArrayList<MessageDoc>, val co
             } else
                 return 1
         } else {
-            if (messages[position].textMessage?.senderId == currentUserId) {
+            //hire image message
+            if (messages[position].imageMessage?.senderId == currentUserId) {
                 return 2
             } else
                 return 3
@@ -71,14 +69,13 @@ class TextMessageItemAdapter(private var messages: ArrayList<MessageDoc>, val co
     }
 
     override fun onBindViewHolder(holder: ViewHolderItem, position: Int) {
-        Log.i("tagid", messages[position].id)
         if (messages[position].textMessage != null) {
             holder.text_view_time.text =
                 DateFormat.format("hh:mm a", messages[position].textMessage?.date).toString()
             holder.text_view_message.text = messages[position].textMessage?.text
         } else {
             holder.textview_image_time.text =
-                DateFormat.format("hh:mm a", messages[position].textMessage?.date).toString()
+                DateFormat.format("hh:mm a", messages[position].imageMessage?.date).toString()
             GlideApp.with(context)
                 .load(storageInstance.getReference(messages[position].imageMessage!!.imagePath))
                 .placeholder(R.drawable.ic_image)

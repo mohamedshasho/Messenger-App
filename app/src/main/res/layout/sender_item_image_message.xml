@@ -21,7 +21,7 @@
             />
 <!-- layout_height="wrap_content" الطول نعيفو تلقائي للصور افضل بس العرض نحدده  -->
         <TextView
-            android:id="@+id/textview_message_time"
+            android:id="@+id/textview_image_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

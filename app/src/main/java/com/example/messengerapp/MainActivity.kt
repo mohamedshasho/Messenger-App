@@ -8,12 +8,12 @@ import android.view.MenuItem
 import android.view.View
 
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.example.messengerapp.fragments.ChatFragment
 import com.example.messengerapp.fragments.MoreFragment
 import com.example.messengerapp.fragments.PeopleFragment
 import com.example.messengerapp.glide.GlideApp
+import com.example.messengerapp.model.ChatItem
 import com.example.messengerapp.model.User
 import com.google.android.material.navigation.NavigationBarView
 
@@ -28,6 +28,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private val mChatFragment = ChatFragment()
     private val mPeopleFragment = PeopleFragment()
     private val mMoreFragment = MoreFragment()
+
+    companion object {
+        val allUsers = ArrayList<ChatItem>()
+        fun getUser(uid:String): ChatItem? {
+            return allUsers.find { it.uid == uid }
+        }
+    }
 
     private val firestoreInstance: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
@@ -56,18 +63,35 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         bottomNavigationView_main.setOnItemSelectedListener(this)
         setFragment(mChatFragment)
-
-        firestoreInstance.collection("users")
-            .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
-            .get().addOnSuccessListener {
-                val user = it.toObject(User::class.java)
-                if (user!!.profileImage.isNotEmpty()) {
-                    GlideApp.with(this).load(storageInstance.getReference(user.profileImage))
-                        .into(imageView_profile)
-                }else{
-                    imageView_profile.setImageResource(R.drawable.ic_account)
+        firestoreInstance.collection("users").addSnapshotListener{snapshot, exeption ->
+            if(exeption!=null){
+                return@addSnapshotListener
+            }
+            if (snapshot?.documents!!.isNotEmpty()) {
+                allUsers.clear()
+                snapshot.documents.forEach {
+                    val user = it.toObject(User::class.java)
+                    allUsers.add(ChatItem(it.id, user!!))
+                    if (it.id == FirebaseAuth.getInstance().currentUser?.uid.toString()) {
+                        GlideApp.with(this).load(storageInstance.getReference(user.profileImage))
+                            .into(imageView_profile)
+                    } else {
+                        imageView_profile.setImageResource(R.drawable.ic_account)
+                    }
                 }
             }
+        }
+//        firestoreInstance.collection("users")
+//            .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
+//            .get().addOnSuccessListener {
+//                val user = it.toObject(User::class.java)
+//                if (user!!.profileImage.isNotEmpty()) {
+//                    GlideApp.with(this).load(storageInstance.getReference(user.profileImage))
+//                        .into(imageView_profile)
+//                }else{
+//                    imageView_profile.setImageResource(R.drawable.ic_account)
+//                }
+//            }
 
     }
 

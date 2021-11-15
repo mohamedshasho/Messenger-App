@@ -11,12 +11,16 @@ import com.example.messengerapp.R
 import com.example.messengerapp.glide.GlideApp
 import com.example.messengerapp.model.ChatItem
 import com.example.messengerapp.model.User
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 
 
 class RecyclerAdapter(private val chatItem: ArrayList<ChatItem>) :
     RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder>() {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view =
@@ -50,6 +54,8 @@ class RecyclerAdapter(private val chatItem: ArrayList<ChatItem>) :
     override fun getItemCount(): Int {
         return chatItem.size
     }
+
+
 
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -14,11 +14,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 
 import com.example.messengerapp.glide.GlideApp
-import com.example.messengerapp.model.ImageMessage
-import com.example.messengerapp.model.Message
-import com.example.messengerapp.model.TextMessage
-import com.example.messengerapp.model.TextMessageDoc
-import com.example.messengerapp.recyclerview.TextMessageItemAdapter
+import com.example.messengerapp.model.*
+import com.example.messengerapp.recyclerview.MessageItemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -123,7 +120,7 @@ class ChatActivity : AppCompatActivity() {
     private fun createChatChannel(onComplete: (channelID: String) -> Unit) {
 
         fireStoreInstance.collection("users").document(mCurrentUserId)
-            .collection("chatChannel").document(mRecipientID).get()
+            .collection("sharedChat").document(mRecipientID).get()
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {
                     onComplete(doc["channelID"] as String)
@@ -134,12 +131,12 @@ class ChatActivity : AppCompatActivity() {
 
                 fireStoreInstance.collection("users")
                     .document(mRecipientID)
-                    .collection("chatChannel")
+                    .collection("sharedChat")
                     .document(mCurrentUserId)
                     .set(mapOf("channelID" to newChatChannel.id))
                 fireStoreInstance.collection("users")
                     .document(mCurrentUserId)
-                    .collection("chatChannel")
+                    .collection("sharedChat")
                     .document(mRecipientID)
                     .set(mapOf("channelID" to newChatChannel.id))
                 onComplete(newChatChannel.id)
@@ -152,15 +149,20 @@ class ChatActivity : AppCompatActivity() {
         query.addSnapshotListener { snapshot, exption ->
 
             if (snapshot!!.documents.isNotEmpty()) {
-                val itemMessages = ArrayList<TextMessageDoc>()
+
+                val itemMessages = ArrayList<MessageDoc>()
                 snapshot.documents.forEach { doc ->
-                    val textMessage = doc.toObject(TextMessage::class.java)
-                    val item = TextMessageDoc(doc.id, textMessage!!)
-
-                    itemMessages.add(item)
-
+                    if (doc["type"] == MessageType.TEXT) {
+                        val textMessage = doc.toObject(TextMessage::class.java)
+                        val item = MessageDoc(doc.id, textMessage = textMessage!!)
+                        itemMessages.add(item)
+                    } else if (doc["type"] == MessageType.IMAGE) {
+                        val imageMessage = doc.toObject(ImageMessage::class.java)
+                        val item = MessageDoc(doc.id, imageMessage = imageMessage!!)
+                        itemMessages.add(item)
+                    }
                 }
-                val messageAdapter = TextMessageItemAdapter(itemMessages)
+                val messageAdapter = MessageItemAdapter(itemMessages,this)
                 chat_recyclerView.apply {
                     //layoutManager =LinearLayoutManager(this@ChatActivity)
                     //because is added in layoutManager xml
