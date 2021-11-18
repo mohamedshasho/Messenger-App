@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "messengerapp-29f64",
+    "Messenger": "messengerapp-29f64"
+  },
+  "targets": {}
+}
