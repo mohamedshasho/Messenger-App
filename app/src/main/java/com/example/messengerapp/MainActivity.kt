@@ -4,13 +4,13 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.fragment.app.Fragment
 import com.example.messengerapp.fragments.ChatFragment
-import com.example.messengerapp.fragments.MoreFragment
 import com.example.messengerapp.fragments.PeopleFragment
 import com.example.messengerapp.glide.GlideApp
 import com.example.messengerapp.model.ChatItem
@@ -27,11 +27,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private val mChatFragment = ChatFragment()
     private val mPeopleFragment = PeopleFragment()
-    private val mMoreFragment = MoreFragment()
 
     companion object {
         val allUsers = ArrayList<ChatItem>()
-        fun getUser(uid:String): ChatItem? {
+        fun getUser(uid: String): ChatItem? {
             return allUsers.find { it.uid == uid }
         }
     }
@@ -63,17 +62,31 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         bottomNavigationView_main.setOnItemSelectedListener(this)
         setFragment(mChatFragment)
-        firestoreInstance.collection("users").addSnapshotListener{snapshot, exeption ->
-            if(exeption!=null){
+        firestoreInstance.collection("users").addSnapshotListener { snapshot, exeption ->
+            if (exeption != null) {
                 return@addSnapshotListener
             }
             if (snapshot?.documents!!.isNotEmpty()) {
                 allUsers.clear()
                 snapshot.documents.forEach {
+                    Log.d(
+                        "idid",
+                        FirebaseAuth.getInstance().currentUser
+                            ?.uid.toString()
+                    )
+                    Log.d(
+                        "idid",
+                        it.id
+                    )
                     val user = it.toObject(User::class.java)
-                    allUsers.add(ChatItem(it.id, user!!))
+                    if (FirebaseAuth.getInstance().currentUser
+                            ?.uid != it.id
+                    ) {
+                        allUsers.add(ChatItem(it.id, user!!))
+                    }
                     if (it.id == FirebaseAuth.getInstance().currentUser?.uid.toString()) {
-                        GlideApp.with(this).load(storageInstance.getReference(user.profileImage))
+                        GlideApp.with(this)
+                            .load(storageInstance.getReference(user!!.profileImage))
                             .into(imageView_profile)
                     } else {
                         imageView_profile.setImageResource(R.drawable.ic_account)
@@ -81,17 +94,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 }
             }
         }
-//        firestoreInstance.collection("users")
-//            .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
-//            .get().addOnSuccessListener {
-//                val user = it.toObject(User::class.java)
-//                if (user!!.profileImage.isNotEmpty()) {
-//                    GlideApp.with(this).load(storageInstance.getReference(user.profileImage))
-//                        .into(imageView_profile)
-//                }else{
-//                    imageView_profile.setImageResource(R.drawable.ic_account)
-//                }
-//            }
 
     }
 
@@ -110,10 +112,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             R.id.navigation_people_item -> {
                 setFragment(mPeopleFragment)
-                return true
-            }
-            R.id.navigation_more_item -> {
-                setFragment(mMoreFragment)
                 return true
             }
             else -> return false

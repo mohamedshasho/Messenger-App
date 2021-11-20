@@ -10,5 +10,4 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
         Log.d("tokenn",token)
     }
-
 }
